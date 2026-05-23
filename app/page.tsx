@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { Cinzel, Lato } from "next/font/google";
+import { Analytics } from "@vercel/analytics/next"
 
 const cinzel = Cinzel({ subsets: ["latin"], weight: ["400", "600", "700"] });
 const lato = Lato({ subsets: ["latin"], weight: ["300", "400", "700"] });
