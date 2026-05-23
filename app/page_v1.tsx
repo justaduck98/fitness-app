@@ -6,148 +6,6 @@ import { Cinzel, Lato } from "next/font/google";
 const cinzel = Cinzel({ subsets: ["latin"], weight: ["400", "600", "700"] });
 const lato = Lato({ subsets: ["latin"], weight: ["300", "400", "700"] });
 
-// ── i18n ─────────────────────────────────────────────────────────────────────
-type Lang = "en" | "sv";
-
-const translations = {
-  en: {
-    appSubtitle: "Vitality System",
-    appTitle: "Your Journey",
-    rankLabel: (rank: string) => rank,
-    nextRankIn: (name: string, pts: number) => `→ ${name} in ${pts} VP`,
-    vpLabel: "Vitality Points",
-    momentum: "Momentum",
-    momentumBonus: (pct: string, days: number) =>
-      `+${pct}% bonus vitality — day ${days}`,
-    tabLog: "⚔️ Log",
-    tabFeed: "📜 Feed",
-    tabStats: "📊 Stats",
-    guidedChallenges: "Guided Challenges",
-    logChallengeCta: (pts: number) => `Log — +${pts} Vitality`,
-    selectChallenge: "Select a Challenge",
-    customActivity: "Custom Activity",
-    logCustomCta: "Log Custom Activity",
-    duration: "Duration",
-    distance: "Distance (optional)",
-    emptyFeed: "No activities yet.\nYour journey starts with the first step.",
-    personalBest: "✨ Personal Best",
-    statsOverview: "Overview",
-    statTotalVitality: "Total Vitality",
-    statActivities: "Activities",
-    statDayStreak: "Day Streak",
-    statPersonalBests: "Personal Bests",
-    personalRecords: "Personal Records",
-    bestDistance: "Best Distance",
-    bestDistanceSub: "Furthest recorded",
-    longestSession: "Longest Session",
-    longestSessionSub: "Most time in one activity",
-    philosophy: "Philosophy",
-    phil1Title: "Every intentional movement matters.",
-    phil1Body: "Nothing counts unless chosen deliberately — so everything you log is a real choice.",
-    phil2Title: "Progress is never lost.",
-    phil2Body: "Breaks slow your momentum, but your Vitality stays with you forever.",
-    phil3Title: "Small is always valid. Big is always exciting.",
-    phil3Body: "A 2-minute jog and a 5km run both belong here.",
-    rewardTitle: "Vitality Gained",
-    rewardSub: (mult: string, day: number) => `Momentum x${mult} · Day ${day}`,
-    newPersonalBest: "✨ New Personal Best!",
-    keepMoving: "Keep Moving",
-    challengeVitality: (pts: number) => `+${pts} Vitality`,
-    ranks: {
-      Sedentary: "Sedentary",
-      "Lightly active": "Lightly Active",
-      Active: "Active",
-      Consistent: "Consistent",
-      Driven: "Driven",
-      Elite: "Elite",
-    },
-    activityTypes: {
-      walk: "Walk",
-      jog: "Jog",
-      run: "Run",
-      workout: "Workout",
-    },
-    challenges: {
-      "2 min jog": "2 min jog",
-      "10 min walk": "10 min walk",
-      "500m run": "500m run",
-      "Light workout": "Light workout",
-      "1km run": "1km run",
-      "30 min walk": "30 min walk",
-      "Full workout": "Full workout",
-      "5km run": "5km run",
-    },
-  },
-  sv: {
-    appSubtitle: "Konditionssystemet",
-    appTitle: "Din Resa",
-    rankLabel: (rank: string) => rank,
-    nextRankIn: (name: string, pts: number) => `→ ${name} om ${pts} KP`,
-    vpLabel: "Konditionspoäng",
-    momentum: "Momentum",
-    momentumBonus: (pct: string, days: number) =>
-      `+${pct}% bonuskondition — dag ${days}`,
-    tabLog: "⚔️ Logga",
-    tabFeed: "📜 Flöde",
-    tabStats: "📊 Statistik",
-    guidedChallenges: "Guidade Utmaningar",
-    logChallengeCta: (pts: number) => `Logga — +${pts} Kondition`,
-    selectChallenge: "Välj en Utmaning",
-    customActivity: "Egen Aktivitet",
-    logCustomCta: "Logga Egen Aktivitet",
-    duration: "Varaktighet",
-    distance: "Sträcka (valfritt)",
-    emptyFeed: "Inga aktiviteter ännu.\nDin resa börjar med det första steget.",
-    personalBest: "✨ Personligt Rekord",
-    statsOverview: "Översikt",
-    statTotalVitality: "Total Kondition",
-    statActivities: "Aktiviteter",
-    statDayStreak: "Dagssvit",
-    statPersonalBests: "Personliga Rekord",
-    personalRecords: "Personliga Rekord",
-    bestDistance: "Bästa Sträcka",
-    bestDistanceSub: "Längst någonsin",
-    longestSession: "Längsta Passet",
-    longestSessionSub: "Mest tid i ett pass",
-    philosophy: "Filosofi",
-    phil1Title: "Varje medveten rörelse räknas.",
-    phil1Body: "Inget räknas om det inte är ett val — allt du loggar är ett riktigt beslut.",
-    phil2Title: "Framsteg försvinner aldrig.",
-    phil2Body: "Pauser bromsar ditt momentum, men din kondition är din för alltid.",
-    phil3Title: "Litet är alltid giltigt. Stort är alltid spännande.",
-    phil3Body: "En 2-minuters jogg och ett 5km-lopp hör båda hemma här.",
-    rewardTitle: "Kondition Uppnådd",
-    rewardSub: (mult: string, day: number) => `Momentum x${mult} · Dag ${day}`,
-    newPersonalBest: "✨ Nytt Personligt Rekord!",
-    keepMoving: "Fortsätt Röra Dig",
-    challengeVitality: (pts: number) => `+${pts} Kondition`,
-    ranks: {
-      Sedentary: "Stillasittande",
-      "Lightly active": "Lätt Aktiv",
-      Active: "Aktiv",
-      Consistent: "Konsekvent",
-      Driven: "Driven",
-      Elite: "Elit",
-    },
-    activityTypes: {
-      walk: "Promenad",
-      jog: "Jogg",
-      run: "Löpning",
-      workout: "Träning",
-    },
-    challenges: {
-      "2 min jog": "2 min jogg",
-      "10 min walk": "10 min promenad",
-      "500m run": "500m löpning",
-      "Light workout": "Lätt träning",
-      "1km run": "1km löpning",
-      "30 min walk": "30 min promenad",
-      "Full workout": "Fullt träningspass",
-      "5km run": "5km löpning",
-    },
-  },
-} as const;
-
 // ── Types ────────────────────────────────────────────────────────────────────
 interface Challenge {
   id: number;
@@ -208,12 +66,12 @@ const ACTIVITY_TYPES: ActivityType[] = [
 ];
 
 const RANK_THRESHOLDS: RankThreshold[] = [
-  { rank: "Sedentary",      min: 0,    color: "#6b7280", glow: "#374151" },
-  { rank: "Lightly active", min: 200,  color: "#86efac", glow: "#166534" },
-  { rank: "Active",         min: 400,  color: "#4ade80", glow: "#15803d" },
+  { rank: "Sedentary",   min: 0,    color: "#6b7280", glow: "#374151" },
+  { rank: "Lightly active",  min: 200,   color: "#86efac", glow: "#166534" },
+  { rank: "Active",  min: 400,  color: "#4ade80", glow: "#15803d" },
   { rank: "Consistent",     min: 600,  color: "#22c55e", glow: "#16a34a" },
-  { rank: "Driven",         min: 800,  color: "#84cc16", glow: "#3f6212" },
-  { rank: "Elite",          min: 1000, color: "#facc15", glow: "#713f12" },
+  { rank: "Driven",  min: 800,  color: "#84cc16", glow: "#3f6212" },
+  { rank: "Elite", min: 1000, color: "#facc15", glow: "#713f12" },
 ];
 
 // ── Pure functions ────────────────────────────────────────────────────────────
@@ -231,6 +89,7 @@ function getNextRank(vitality: number): RankThreshold | null {
   return null;
 }
 
+// Consecutive active days (0–8) → multiplier 1.0–2.0
 function momentumMultiplier(days: number): number {
   return 1.0 + Math.min(days, 8 * 0.125);
 }
@@ -250,14 +109,11 @@ function updatedStreakDays(lastActiveDate: string | null, consecutiveDays: numbe
   if (lastActiveDate === t) return consecutiveDays;
   const diff = (new Date(t).getTime() - new Date(lastActiveDate).getTime()) / 86400000;
   if (diff === 1) return Math.min(8, consecutiveDays + 1);
-  return 1;
+  return 1; // gap — reset to 1, not 0 (returning is rewarded)
 }
 
 // ── Component ────────────────────────────────────────────────────────────────
 export default function VitalityApp() {
-  const [lang, setLang] = useState<Lang>("en");
-  const t = translations[lang];
-
   const [tab, setTab] = useState<"log" | "feed" | "stats">("log");
   const [vitality, setVitality] = useState(0);
   const [streakDays, setStreakDays] = useState(0);
@@ -292,7 +148,7 @@ export default function VitalityApp() {
     const buff = calcBuff(c.effort, newDays);
     setVitality((v) => v + buff);
     setActivities((a) => [
-      { id: Date.now(), label: t.challenges[c.label as keyof typeof t.challenges] ?? c.label, icon: c.icon, buff, isPr: false, ts: new Date() },
+      { id: Date.now(), label: c.label, icon: c.icon, buff, isPr: false, ts: new Date() },
       ...a,
     ]);
     setReward({ buff, label: c.label, icon: c.icon, isPr: false, newDays });
@@ -300,7 +156,7 @@ export default function VitalityApp() {
   }
 
   function logCustom() {
-    const type = ACTIVITY_TYPES.find((x) => x.id === customType)!;
+    const type = ACTIVITY_TYPES.find((t) => t.id === customType)!;
     let effort = type.baseEffort;
     if (customDuration > 10) effort += 0.05 * Math.log(customDuration / 10);
     if (customDistance > 1) effort += 0.08 * Math.log(customDistance);
@@ -313,28 +169,31 @@ export default function VitalityApp() {
     if (customDistance > 0 && customDistance > prDistance) { setPrDistance(customDistance); isPr = true; }
     if (customDuration > 0 && customDuration > prDuration) { setPrDuration(customDuration); isPr = true; }
 
-    const typeLabel = t.activityTypes[type.id as keyof typeof t.activityTypes] ?? type.label;
     setVitality((v) => v + buff);
     setActivities((a) => [
       {
         id: Date.now(),
-        label: `${typeLabel} ${customDuration}min${customDistance ? ` · ${customDistance}km` : ""}`,
+        label: `${type.label} ${customDuration}min${customDistance ? ` · ${customDistance}km` : ""}`,
         icon: type.icon, buff, isPr, ts: new Date(),
       },
       ...a,
     ]);
-    setReward({ buff, label: typeLabel, icon: type.icon, isPr, newDays });
+    setReward({ buff, label: type.label, icon: type.icon, isPr, newDays });
   }
 
   function formatTs(ts: Date): string {
     return ts.toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" });
   }
 
-  const rankLabel = t.ranks[rank.rank as keyof typeof t.ranks] ?? rank.rank;
-  const nextRankLabel = nextRank ? (t.ranks[nextRank.rank as keyof typeof t.ranks] ?? nextRank.rank) : null;
-
   return (
-    <main className={lato.className} style={{ minHeight: "100vh", background: "#0a0f0a", color: "#d1fae5" }}>
+    <main
+      className={lato.className}
+      style={{
+        minHeight: "100vh",
+        background: "#0a0f0a",
+        color: "#d1fae5",
+      }}
+    >
       <style>{`
         :root {
           --bg: #0a0f0a; --surface: #111711; --surface2: #162016;
@@ -346,14 +205,9 @@ export default function VitalityApp() {
 
         .vs-app { max-width: 420px; margin: 0 auto; padding: 0 0 80px; position: relative; }
 
-        .vs-header { padding: 24px 20px 16px; display: flex; justify-content: space-between; align-items: flex-start; }
-        .vs-header-left {}
+        .vs-header { padding: 24px 20px 16px; }
         .vs-header-sub { font-size: 11px; letter-spacing: 4px; text-transform: uppercase; color: var(--muted); margin-bottom: 4px; }
         .vs-header-title { font-size: 22px; font-weight: 700; color: var(--green); letter-spacing: 1px; }
-
-        .vs-lang-toggle { display: flex; gap: 4px; margin-top: 4px; }
-        .vs-lang-btn { padding: 4px 10px; font-size: 11px; letter-spacing: 1px; text-transform: uppercase; border-radius: 20px; border: 1px solid var(--border); background: transparent; color: var(--muted); cursor: pointer; transition: all 0.2s; }
-        .vs-lang-btn.on { border-color: var(--green); color: var(--green); background: #22c55e12; }
 
         .vs-card { margin: 0 16px 20px; background: var(--surface); border: 1px solid var(--border); border-radius: 16px; padding: 20px; position: relative; overflow: hidden; }
         .vs-card::before { content: ''; position: absolute; inset: 0; background: radial-gradient(ellipse 80% 60% at 50% 100%, #22c55e08 0%, transparent 70%); pointer-events: none; }
@@ -448,53 +302,44 @@ export default function VitalityApp() {
       <div className="vs-app">
         {/* Header */}
         <div className="vs-header">
-          <div className="vs-header-left">
-            <div className={`vs-header-sub ${cinzel.className}`}>{t.appSubtitle}</div>
-            <div className={`vs-header-title ${cinzel.className}`}>{t.appTitle}</div>
-          </div>
-          <div className="vs-lang-toggle">
-            {(["en", "sv"] as Lang[]).map((l) => (
-              <button key={l} className={`vs-lang-btn ${cinzel.className} ${lang === l ? "on" : ""}`} onClick={() => setLang(l)}>
-                {l.toUpperCase()}
-              </button>
-            ))}
-          </div>
+          <div className={`vs-header-sub ${cinzel.className}`}>Vitality System</div>
+          <div className={`vs-header-title ${cinzel.className}`}>Your Journey</div>
         </div>
 
         {/* Vitality card */}
         <div className="vs-card">
           <div className="vs-rank-row">
             <span className={`vs-rank-badge ${cinzel.className}`} style={{ color: rank.color, borderColor: rank.color }}>
-              {rankLabel}
+              {rank.rank}
             </span>
-            {nextRank && nextRankLabel && (
+            {nextRank && (
               <span style={{ fontSize: 11, color: "var(--muted)" }}>
-                {t.nextRankIn(nextRankLabel, nextRank.min - vitality)}
+                → {nextRank.rank} in {nextRank.min - vitality} VP
               </span>
             )}
           </div>
           <div className={`vs-vp-number ${cinzel.className}`} style={{ color: rank.color, textShadow: `0 0 30px ${rank.glow}` }}>
             {vitality}
           </div>
-          <div className="vs-vp-label">{t.vpLabel}</div>
+          <div className="vs-vp-label">Vitality Points</div>
           <div className="vs-bar-wrap">
             <div className="vs-bar-labels">
-              <span>{rankLabel}</span>
-              {nextRankLabel && <span>{nextRankLabel}</span>}
+              <span>{rank.rank}</span>
+              {nextRank && <span>{nextRank.rank}</span>}
             </div>
             <div className="vs-bar-track">
               <div className="vs-bar-fill" style={{ width: `${xpPct}%` }} />
             </div>
           </div>
           <div className="vs-momentum-row">
-            <span className="vs-momentum-label">{t.momentum}</span>
+            <span className="vs-momentum-label">Momentum</span>
             <div className="vs-pips">
               {Array.from({ length: 8 }).map((_, i) => (
                 <div key={i} className={`vs-pip ${i < streakDays ? "on" : ""}`} />
               ))}
             </div>
             <span style={{ fontSize: 11, color: "var(--muted)", marginLeft: 8 }}>
-              {t.momentumBonus(((multiplier - 1) * 100).toFixed(0), streakDays)}
+            +{((multiplier - 1) * 100).toFixed(0)}% bonus vitality {streakDays >= 8 ? "🔥" :  `consectutive days: ${streakDays}`}
             </span>
           </div>
         </div>
@@ -503,44 +348,44 @@ export default function VitalityApp() {
         <div className="vs-tabs">
           {(["log", "feed", "stats"] as const).map((id) => (
             <button key={id} className={`vs-tab ${cinzel.className} ${tab === id ? "on" : ""}`} onClick={() => setTab(id)}>
-              {id === "log" ? t.tabLog : id === "feed" ? t.tabFeed : t.tabStats}
+              {id === "log" ? "⚔️ Log" : id === "feed" ? "📜 Feed" : "📊 Stats"}
             </button>
           ))}
         </div>
 
-        {/* Custom activity */}
-        <div className="vs-custom" style={{ margin: "0 16px 24px" }}>
-          <div className={`vs-custom-title ${cinzel.className}`}>{t.customActivity}</div>
-          <div className="vs-type-row">
-            {ACTIVITY_TYPES.map((type) => (
-              <button key={type.id} className={`vs-type-btn ${customType === type.id ? "on" : ""}`} onClick={() => setCustomType(type.id)}>
-                {type.icon} {t.activityTypes[type.id as keyof typeof t.activityTypes]}
+            {/* Custom activity */}
+            <div className="vs-custom">
+              <div className={`vs-custom-title ${cinzel.className}`}>Custom Activity</div>
+              <div className="vs-type-row">
+                {ACTIVITY_TYPES.map((t) => (
+                  <button key={t.id} className={`vs-type-btn ${customType === t.id ? "on" : ""}`} onClick={() => setCustomType(t.id)}>
+                    {t.icon} {t.label}
+                  </button>
+                ))}
+              </div>
+              <div className="vs-slider-row">
+                <div className="vs-slider-label">
+                  <span>Duration</span>
+                  <span style={{ color: "var(--green)" }}>{customDuration} min</span>
+                </div>
+                <input type="range" min={1} max={120} value={customDuration} onChange={(e) => setCustomDuration(Number(e.target.value))} />
+              </div>
+              <div className="vs-slider-row">
+                <div className="vs-slider-label">
+                  <span>Distance (optional)</span>
+                  <span style={{ color: "var(--green)" }}>{customDistance} km</span>
+                </div>
+                <input type="range" min={0} max={20} step={0.5} value={customDistance} onChange={(e) => setCustomDistance(Number(e.target.value))} />
+              </div>
+              <button className={`vs-btn ${cinzel.className}`} onClick={logCustom} style={{ marginBottom: 0 }}>
+                Log Custom Activity
               </button>
-            ))}
-          </div>
-          <div className="vs-slider-row">
-            <div className="vs-slider-label">
-              <span>{t.duration}</span>
-              <span style={{ color: "var(--green)" }}>{customDuration} min</span>
             </div>
-            <input type="range" min={1} max={120} value={customDuration} onChange={(e) => setCustomDuration(Number(e.target.value))} />
-          </div>
-          <div className="vs-slider-row">
-            <div className="vs-slider-label">
-              <span>{t.distance}</span>
-              <span style={{ color: "var(--green)" }}>{customDistance} km</span>
-            </div>
-            <input type="range" min={0} max={20} step={0.5} value={customDistance} onChange={(e) => setCustomDistance(Number(e.target.value))} />
-          </div>
-          <button className={`vs-btn ${cinzel.className}`} onClick={logCustom} style={{ marginBottom: 0 }}>
-            {t.logCustomCta}
-          </button>
-        </div>
 
-        {/* Log tab */}
+            {/* Log tab */}
         {tab === "log" && (
           <div className="vs-section">
-            <div className={`vs-section-title ${cinzel.className}`}>{t.guidedChallenges}</div>
+            <div className={`vs-section-title ${cinzel.className}`}>Guided Challenges</div>
             <div className="vs-grid">
               {CHALLENGES.map((c) => (
                 <div
@@ -549,16 +394,16 @@ export default function VitalityApp() {
                   onClick={() => setSelectedChallenge(selectedChallenge === c.id ? null : c.id)}
                 >
                   <div className="vs-c-icon">{c.icon}</div>
-                  <div className="vs-c-label">{t.challenges[c.label as keyof typeof t.challenges]}</div>
+                  <div className="vs-c-label">{c.label}</div>
                   <div className="vs-c-dur">{c.duration}</div>
-                  <div className={`vs-c-buff ${cinzel.className}`}>{t.challengeVitality(calcBuff(c.effort, streakDays))}</div>
+                  <div className={`vs-c-buff ${cinzel.className}`}>+{calcBuff(c.effort, streakDays)} Vitality</div>
                 </div>
               ))}
             </div>
             <button className={`vs-btn ${cinzel.className}`} disabled={!selectedChallenge} onClick={logChallenge}>
               {selectedChallenge
-                ? t.logChallengeCta(calcBuff(CHALLENGES.find((x) => x.id === selectedChallenge)?.effort ?? 0, streakDays))
-                : t.selectChallenge}
+                ? `Log — +${calcBuff(CHALLENGES.find((x) => x.id === selectedChallenge)?.effort ?? 0, streakDays)} Vitality`
+                : "Select a Challenge"}
             </button>
           </div>
         )}
@@ -569,7 +414,7 @@ export default function VitalityApp() {
             {activities.length === 0 ? (
               <div className="vs-empty">
                 <div className="vs-empty-icon">🌱</div>
-                <div>{t.emptyFeed.split("\n").map((line, i) => <span key={i}>{line}{i === 0 && <br />}</span>)}</div>
+                <div>No activities yet.<br />Your journey starts with the first step.</div>
               </div>
             ) : (
               <div className="vs-feed">
@@ -579,7 +424,7 @@ export default function VitalityApp() {
                     <div className="vs-feed-content">
                       <div className="vs-feed-label">{a.label}</div>
                       <div className="vs-feed-meta">{formatTs(a.ts)}</div>
-                      {a.isPr && <div className="vs-pr-badge">{t.personalBest}</div>}
+                      {a.isPr && <div className="vs-pr-badge">✨ Personal Best</div>}
                     </div>
                     <div className={`vs-feed-buff ${cinzel.className}`}>+{a.buff}</div>
                   </div>
@@ -592,50 +437,50 @@ export default function VitalityApp() {
         {/* Stats tab */}
         {tab === "stats" && (
           <div className="vs-section">
-            <div className={`vs-section-title ${cinzel.className}`}>{t.statsOverview}</div>
+            <div className={`vs-section-title ${cinzel.className}`}>Overview</div>
             <div className="vs-stats-grid">
               <div className="vs-stat-box">
                 <div className={`vs-stat-val ${cinzel.className}`}>{vitality}</div>
-                <div className="vs-stat-lbl">{t.statTotalVitality}</div>
+                <div className="vs-stat-lbl">Total Vitality</div>
               </div>
               <div className="vs-stat-box">
                 <div className={`vs-stat-val ${cinzel.className}`}>{activities.length}</div>
-                <div className="vs-stat-lbl">{t.statActivities}</div>
+                <div className="vs-stat-lbl">Activities</div>
               </div>
               <div className="vs-stat-box">
-                <div className={`vs-stat-val ${cinzel.className}`}>{streakDays}</div>
-                <div className="vs-stat-lbl">{t.statDayStreak}</div>
+                <div className={`vs-stat-val ${cinzel.className}`}>{streakDays}/8</div>
+                <div className="vs-stat-lbl">Day Streak</div>
               </div>
               <div className="vs-stat-box">
                 <div className={`vs-stat-val ${cinzel.className}`} style={{ color: "var(--gold)" }}>
                   {activities.filter((a) => a.isPr).length}
                 </div>
-                <div className="vs-stat-lbl">{t.statPersonalBests}</div>
+                <div className="vs-stat-lbl">Personal Bests</div>
               </div>
             </div>
 
-            <div className={`vs-section-title ${cinzel.className}`}>{t.personalRecords}</div>
+            <div className={`vs-section-title ${cinzel.className}`}>Personal Records</div>
             <div className="vs-pr-list">
               <div className="vs-pr-item">
                 <div>
-                  <div className="vs-pr-name">{t.bestDistance}</div>
-                  <div style={{ fontSize: 11, color: "var(--muted)" }}>{t.bestDistanceSub}</div>
+                  <div className="vs-pr-name">Best Distance</div>
+                  <div style={{ fontSize: 11, color: "var(--muted)" }}>Furthest recorded</div>
                 </div>
-                <div className={`vs-pr-val ${cinzel.className}`}>{prDistance > 0 ? `${prDistance} km` : "—"}</div>
+                <div className={`vs-pr-val ${cinzel.className}`}>{prDistance > 0 ? `${prDistance} km `: "—"}</div>
               </div>
               <div className="vs-pr-item">
                 <div>
-                  <div className="vs-pr-name">{t.longestSession}</div>
-                  <div style={{ fontSize: 11, color: "var(--muted)" }}>{t.longestSessionSub}</div>
+                  <div className="vs-pr-name">Longest Session</div>
+                  <div style={{ fontSize: 11, color: "var(--muted)" }}>Most time in one activity</div>
                 </div>
-                <div className={`vs-pr-val ${cinzel.className}`}>{prDuration > 0 ? `${prDuration} min` : "—"}</div>
+                <div className={`vs-pr-val ${cinzel.className}`}>{prDuration > 0 ? `${prDuration} min `: "—"}</div>
               </div>
             </div>
 
-            <div className={`vs-section-title ${cinzel.className}`}>{t.philosophy}</div>
-            <div className="vs-phil"><strong>{t.phil1Title}</strong> {t.phil1Body}</div>
-            <div className="vs-phil"><strong>{t.phil2Title}</strong> {t.phil2Body}</div>
-            <div className="vs-phil"><strong>{t.phil3Title}</strong> {t.phil3Body}</div>
+            <div className={`vs-section-title ${cinzel.className}`}>Philosophy</div>
+            <div className="vs-phil"><strong>Every intentional movement matters.</strong> Nothing counts unless chosen deliberately — so everything you log is a real choice.</div>
+            <div className="vs-phil"><strong>Progress is never lost.</strong> Breaks slow your momentum, but your Vitality stays with you forever.</div>
+            <div className="vs-phil"><strong>Small is always valid. Big is always exciting.</strong> A 2-minute jog and a 5km run both belong here.</div>
           </div>
         )}
 
@@ -644,7 +489,7 @@ export default function VitalityApp() {
           {(["log", "feed", "stats"] as const).map((id) => (
             <button key={id} className={`vs-nav-btn ${cinzel.className} ${tab === id ? "on" : ""}`} onClick={() => setTab(id)}>
               <span className="vs-nav-icon">{id === "log" ? "⚔️" : id === "feed" ? "📜" : "📊"}</span>
-              {id === "log" ? t.tabLog.split(" ")[1] : id === "feed" ? t.tabFeed.split(" ")[1] : t.tabStats.split(" ")[1]}
+              {id}
             </button>
           ))}
         </nav>
@@ -654,14 +499,14 @@ export default function VitalityApp() {
           <div className="vs-overlay" onClick={() => setReward(null)}>
             <div className="vs-reward-card" onClick={(e) => e.stopPropagation()}>
               <div className="vs-reward-icon">{reward.icon}</div>
-              <div className={`vs-reward-title ${cinzel.className}`}>{t.rewardTitle}</div>
+              <div className={`vs-reward-title ${cinzel.className}`}>Vitality Gained</div>
               <div className={`vs-reward-buff ${cinzel.className}`}>+{reward.buff}</div>
               <div className="vs-reward-sub">
-                {t.rewardSub(momentumMultiplier(reward.newDays).toFixed(2), reward.newDays)}
+                Momentum x{momentumMultiplier(reward.newDays).toFixed(2)} · Day {reward.newDays}
               </div>
-              {reward.isPr && <div className={`vs-reward-pr ${cinzel.className}`}>{t.newPersonalBest}</div>}
+              {reward.isPr && <div className={`vs-reward-pr ${cinzel.className}`}>✨ New Personal Best!</div>}
               <button className={`vs-reward-close ${cinzel.className}`} onClick={() => setReward(null)}>
-                {t.keepMoving}
+                Keep Moving
               </button>
             </div>
           </div>
